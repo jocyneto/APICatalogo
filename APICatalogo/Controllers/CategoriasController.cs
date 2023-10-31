@@ -15,6 +15,7 @@ using System.Text.Json;
 
 namespace APICatalogo.Controllers;
 
+[Authorize(AuthenticationSchemes = "Bearer")]
 [Route("api/[controller]")]
 [ApiController]
 //[Authorize(AuthenticationSchemes = "Bearer")]
