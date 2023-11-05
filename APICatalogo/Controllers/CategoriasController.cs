@@ -8,6 +8,7 @@ using APICatalogo.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,11 +16,12 @@ using System.Text.Json;
 
 namespace APICatalogo.Controllers;
 
-[Authorize(AuthenticationSchemes = "Bearer")]
+
+//[Authorize(AuthenticationSchemes = "Bearer")] //Alternativa
 [Route("api/[controller]")]
 [ApiController]
-//[Authorize(AuthenticationSchemes = "Bearer")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] /*~~> Comentado para teste de CORS*/
+//[EnableCors("PermitirApiRequest")] //~~> Ativar todos os metodos do controller
 public class CategoriasController : ControllerBase
 {
     public readonly IUnityOfWork _uof;
@@ -107,6 +109,7 @@ public class CategoriasController : ControllerBase
     */
 
     [HttpGet("{id:int}", Name = "ObterCategoria")]
+    //[EnableCors("PermitirApiRequest")] //~~> Ativar para pegar apenas este metodo
     public async Task<ActionResult<CategoriaDTO>> Get(int id)
     {
         var categoria = await _uof.CategoriaRepository.GetById(cat => cat.CategoriaId == id);

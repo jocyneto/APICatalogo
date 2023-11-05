@@ -90,6 +90,28 @@ builder.Services.AddTransient<IMeuServico, MeuServico>();
 builder.Services.AddScoped<IUnityOfWork, UnityOfWork>();
 #endregion
 
+#region Adicionando politica CORS (Via Atributo)
+/*
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("PermitirApiRequest",
+//        builder =>
+//        builder.WithOrigins("https://curlbuilder.com/")
+//                .WithMethods("GET")
+//        );
+
+//});
+*/
+
+builder.Services.AddCors(options => {
+    options.AddPolicy("PermitirApiRequest",
+        builder =>
+        builder.AllowAnyOrigin()
+        );
+});
+
+#endregion
+
 # region Adicionando DTO
 
 var mappingConfig = new MapperConfiguration(mc => {
@@ -113,8 +135,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors();
 
 app.MapControllers();
 
