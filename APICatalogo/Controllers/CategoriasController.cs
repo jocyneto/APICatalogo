@@ -19,9 +19,10 @@ namespace APICatalogo.Controllers;
 
 //[Authorize(AuthenticationSchemes = "Bearer")] //Alternativa
 [Route("api/[controller]")]
+[Produces("application/json")]
 [ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] /*~~> Comentado para teste de CORS*/
-//[EnableCors("PermitirApiRequest")] //~~> Ativar todos os metodos do controller
+[EnableCors("PermitirApiRequest")] //~~> Ativar todos os metodos do controller
 public class CategoriasController : ControllerBase
 {
     public readonly IUnityOfWork _uof;

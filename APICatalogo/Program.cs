@@ -106,8 +106,8 @@ builder.Services.AddScoped<IUnityOfWork, UnityOfWork>();
 builder.Services.AddCors(options => {
     options.AddPolicy("PermitirApiRequest",
         builder =>
-        builder.AllowAnyOrigin()
-        );
+        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().Build()
+        ); ;
 });
 
 #endregion
@@ -139,7 +139,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseCors();
+app.UseCors("PermitirApiRequest");
 
 app.MapControllers();
 
